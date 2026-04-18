@@ -224,3 +224,5 @@ urllib3==2.6.3
 uvicorn==0.44.0
 virtualenv==21.2.4
 zipp==3.23.1
+
+pysnowflake
