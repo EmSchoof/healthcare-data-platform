@@ -14,11 +14,14 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['Patient']
+              arguments:
+                values: ['Patient']
+                quote: true
 
       - name: gender
         description: "Administrative gender from the patient resource."
         tests:
           - accepted_values:
-              values: ['male', 'female', 'other', 'unknown']
-              quote: true
+              arguments:
+                values: ['male', 'female', 'other', 'unknown']
+                quote: true
