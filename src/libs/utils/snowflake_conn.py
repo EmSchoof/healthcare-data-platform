@@ -6,11 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
-# dynamically find key file in local repo
-key_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'rsa_key.p8')
-
 # load passkey
-with open(key_path, "rb") as key_file:
+with open('rsa_key.p8', "rb") as key_file:
     p_key = serialization.load_pem_private_key(
         key_file.read(),
         password=os.getenv("SNOWFLAKE_PASSKEY_ENCRYPT").encode(),
@@ -48,4 +45,4 @@ def connect_to_snowflake() -> None:
 
 if __name__ == "__main__":
     print("ACCOUNT =", os.getenv("SNOWFLAKE_USER"))
-    main()
+    connect_to_snowflake()

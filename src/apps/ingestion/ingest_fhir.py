@@ -1,6 +1,6 @@
 # import modules
 from dotenv import load_dotenv
-from libs.utils.snowflake_conn import connect_to_snowflake
+from src.libs.utils.snowflake_conn import connect_to_snowflake
 load_dotenv()
 import json
 
@@ -26,6 +26,6 @@ def load_fhir_json(file_path,  cur):
 
 if __name__ == "__main__":
     conn, cur = open_snowflake_connection()
-    load_fhir_json("../../data/sample_fhir.json", cur)
+    load_fhir_json("src/data/sample_fhir.json", cur)
     cur.close()
     conn.close()
