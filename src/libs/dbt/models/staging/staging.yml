@@ -1,0 +1,19 @@
+version: 1
+sources:
+  - name: raw
+    database: HEALTHCARE_DB
+    schema: RAW
+    tables:
+      - name: fhir_patients
+
+models:
+  - name: stg_fhir_patients
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+      - name: resource_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Patient']
