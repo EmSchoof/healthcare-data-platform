@@ -1,0 +1,10 @@
+name: healthcare_dbt
+version: 1.0
+profile: healthcare
+
+models:
+  healthcare_dbt:
+    staging:
+      materialized: view
+    marts:
+      materialized: table
