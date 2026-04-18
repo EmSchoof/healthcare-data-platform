@@ -211,3 +211,6 @@ __marimo__/
 
 # Secrets
 rsa_key*
+
+# Demo Data
+sample_fhir.json
