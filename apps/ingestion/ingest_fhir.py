@@ -1,36 +1,12 @@
 # import modules
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.backends import default_backend
-import snowflake.connector
 from dotenv import load_dotenv
+from libs.utils.snowflake_conn import connect_to_snowflake
 load_dotenv()
 import json
-import os
 
-# dynamically load passkey
-with open("rsa_key.p8", "rb") as key_file:
-    p_key = serialization.load_pem_private_key(
-        key_file.read(),
-        password=os.getenv("SNOWFLAKE_PASSKEY_ENCRYPT").encode(),
-        backend=default_backend()
-    )
-
-pkb = p_key.private_bytes(
-    encoding=serialization.Encoding.DER,
-    format=serialization.PrivateFormat.PKCS8,
-    encryption_algorithm=serialization.NoEncryption()
-)
-
-# connect var to Snowflake demo db
-conn = snowflake.connector.connect(
-    user=os.getenv("SNOWFLAKE_USER"),
-    password=os.getenv("SNOWFLAKE_PASSWORD"),
-    account=os.getenv("SNOWFLAKE_ACCOUNT"),
-    warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
-    database=os.getenv("SNOWFLAKE_DATABASE"),
-    schema=os.getenv("SNOWFLAKE_SCHEMA")
-)
-cursor = conn.cursor()
+def open_snowflake_connection():
+    conn, cur = connect_to_snowflake()
+    return conn, cur
 
 # load demo patient data into Snowflake demo db
 def load_fhir_json(file_path):
@@ -49,4 +25,7 @@ def load_fhir_json(file_path):
     print(f"Loaded {len(patients)} records")
 
 if __name__ == "__main__":
+    conn, cur = open_snowflake_connection()
     load_fhir_json("../../data/sample_fhir.json")
+    cur.close()
+    conn.close()
