@@ -7,7 +7,7 @@ load_dotenv()
 import os
 
 # dynamically load passkey
-with open("rsa_key.p8", "rb") as key_file:
+with open("../rsa_key.p8", "rb") as key_file:
     p_key = serialization.load_pem_private_key(
         key_file.read(),
         password=os.getenv("SNOWFLAKE_PASSKEY_ENCRYPT").encode(),
