@@ -9,12 +9,12 @@ def open_snowflake_connection():
     return conn, cur
 
 # load demo patient data into Snowflake demo db
-def load_fhir_json(file_path):
+def load_fhir_json(file_path,  cur):
     with open(file_path, "r") as f:
         patients = json.load(f)
 
     for patient in patients:
-        cursor.execute(
+        cur.execute(
             """
             INSERT INTO raw_fhir_patient (ingestion_ts, payload)
             SELECT CURRENT_TIMESTAMP, PARSE_JSON(%s)
@@ -26,6 +26,6 @@ def load_fhir_json(file_path):
 
 if __name__ == "__main__":
     conn, cur = open_snowflake_connection()
-    load_fhir_json("../../data/sample_fhir.json")
+    load_fhir_json("../../data/sample_fhir.json", cur)
     cur.close()
     conn.close()
