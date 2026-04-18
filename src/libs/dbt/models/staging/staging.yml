@@ -1,19 +1,24 @@
-version: 1
-sources:
-  - name: raw
-    database: HEALTHCARE_DB
-    schema: RAW
-    tables:
-      - name: fhir_patients
+version: 2
 
 models:
   - name: stg_fhir_patients
+    description: "Typed staging model for raw FHIR Patient resources."
     columns:
       - name: patient_id
+        description: "Primary patient identifier from the ingested resource."
         tests:
           - not_null
+
       - name: resource_type
+        description: "FHIR resource type."
         tests:
           - not_null
           - accepted_values:
               values: ['Patient']
+
+      - name: gender
+        description: "Administrative gender from the patient resource."
+        tests:
+          - accepted_values:
+              values: ['male', 'female', 'other', 'unknown']
+              quote: true

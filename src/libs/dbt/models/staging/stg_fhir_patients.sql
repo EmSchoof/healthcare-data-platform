@@ -1,7 +1,7 @@
 WITH source AS (
     SELECT
         raw_record
-    FROM {{ source('raw', 'fhir_patients') }}
+    FROM {{ source('raw', 'raw_fhir_patients') }}
 ),
 
 final AS (

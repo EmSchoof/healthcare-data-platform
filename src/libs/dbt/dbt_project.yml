@@ -1,0 +1,24 @@
+name: 'healthcare_data_platform'
+version: '1.0.0'
+config-version: 1
+dbt-cloud:
+    project-id: 70471823577092
+
+profile: 'healthcare_data_platform'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+test-paths: ["tests"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  healthcare_data_platform:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

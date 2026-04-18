@@ -1,0 +1,8 @@
+version: 1
+sources:
+  - name: raw
+    database: HEALTHCARE_DB
+    schema: RAW
+    tables:
+      - name: raw_fhir_patients
+        description: "Raw FHIR Patient records ingested from synthetic JSON files into Snowflake."
