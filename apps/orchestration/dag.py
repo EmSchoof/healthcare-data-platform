@@ -1,5 +1,6 @@
-from airflow import DAG
+# import modules
 from airflow.operators.bash import BashOperator
+from airflow import DAG
 from datetime import datetime
 
 with DAG(

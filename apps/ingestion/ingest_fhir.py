@@ -1,18 +1,20 @@
+# import modules
+import os
 import json
 import snowflake.connector
 
-# Replace with env vars in real setup
+# connect var to Snowflake demo db
 conn = snowflake.connector.connect(
-    user="YOUR_USER",
-    password="YOUR_PASSWORD",
-    account="YOUR_ACCOUNT",
-    warehouse="COMPUTE_WH",
-    database="HEALTHCARE",
-    schema="RAW"
+    user=os.getenv("SNOWFLAKE_USER"),
+    password=os.getenv("SNOWFLAKE_PASSWORD"),
+    account=os.getenv("SNOWFLAKE_ACCOUNT"),
+    warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
+    database=os.getenv("SNOWFLAKE_DATABASE"),
+    schema=os.getenv("SNOWFLAKE_SCHEMA")
 )
-
 cursor = conn.cursor()
 
+# load demo patient data into Snowflake demo db
 def load_fhir_json(file_path):
     with open(file_path, "r") as f:
         patients = json.load(f)
