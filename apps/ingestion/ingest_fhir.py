@@ -1,7 +1,25 @@
 # import modules
-import os
-import json
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.backends import default_backend
 import snowflake.connector
+from dotenv import load_dotenv
+load_dotenv()
+import json
+import os
+
+# dynamically load passkey
+with open("rsa_key.p8", "rb") as key_file:
+    p_key = serialization.load_pem_private_key(
+        key_file.read(),
+        password=os.getenv("SNOWFLAKE_PASSKEY_ENCRYPT").encode(),
+        backend=default_backend()
+    )
+
+pkb = p_key.private_bytes(
+    encoding=serialization.Encoding.DER,
+    format=serialization.PrivateFormat.PKCS8,
+    encryption_algorithm=serialization.NoEncryption()
+)
 
 # connect var to Snowflake demo db
 conn = snowflake.connector.connect(
