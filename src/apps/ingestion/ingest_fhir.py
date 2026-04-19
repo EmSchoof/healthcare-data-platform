@@ -25,8 +25,8 @@ def insert_raw_fhir_patients(json_path: str):
             rows.append((
                 patient.get("resourceType"),
                 patient.get("id"),
-                name0.get("family"),
                 (name0.get("given") or [None])[0],
+                name0.get("family"),
                 patient.get("gender"),
                 patient.get("birthDate"),
                 address0.get("city"),
@@ -42,8 +42,8 @@ def insert_raw_fhir_patients(json_path: str):
             INSERT INTO raw_fhir_patients (
                 resource_type,
                 patient_id,
-                family_name,
-                given_name,
+                first_name,
+                last_name,
                 gender,
                 birth_date,
                 city,

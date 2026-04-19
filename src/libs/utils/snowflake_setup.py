@@ -3,6 +3,7 @@ def ensure_fhir_patients_table(conn, cur) -> None:
     try:
         cur.execute("""
             CREATE TABLE IF NOT EXISTS raw_fhir_patients (
+                resource_type STRING,
                 patient_id STRING,
                 first_name STRING,
                 last_name STRING,

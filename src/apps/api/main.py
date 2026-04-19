@@ -3,12 +3,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Query, Response, status
 from src.apps.api.schemas import CapabilityStatement, PatientResource, SearchBundle
 from src.apps.api.snowflake_service import create_patient, get_patient_by_id, search_patients
-from src.apps.ingestion import insert_raw_fhir_patients
+from src.apps.ingestion.ingest_fhir import insert_raw_fhir_patients
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # verify table exists with data in snowflake before workflow
-    insert_raw_fhir_patients()
+    insert_raw_fhir_patients("src/data/sample_fhir.json")
     print("Snowflake table ensured.")
     yield
     print("Shutting down...")

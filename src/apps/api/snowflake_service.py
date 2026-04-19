@@ -6,6 +6,7 @@ from src.libs.utils.snowflake_conn import connect_to_snowflake
 # create patient row from DEMO FHIR input data within Snowflake demo DB
 def row_to_patient(row: tuple[Any, ...]) -> dict[str, Any]:
     (
+        resource_type,
         patient_id,
         first_name,
         last_name,
@@ -56,6 +57,7 @@ def get_patient_by_id(patient_id: str) -> Optional[dict[str, Any]]:
         cur.execute(
             """
             SELECT
+                resource_type,
                 patient_id,
                 first_name,
                 last_name,
@@ -84,6 +86,7 @@ def search_patients(identifier: Optional[str] = None, family: Optional[str] = No
     try:
         sql = """
             SELECT
+                resource_type,
                 patient_id,
                 first_name,
                 last_name,
