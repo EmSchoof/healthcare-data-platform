@@ -1,7 +1,7 @@
 version: 1
 sources:
   - name: raw
-    database: HEALTHCARE_DB
+    database: HEALTHCARE_DEMO
     schema: RAW
     tables:
       - name: raw_fhir_patients
