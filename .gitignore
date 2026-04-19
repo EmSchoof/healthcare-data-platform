@@ -57,6 +57,7 @@ data/private/
 *.feather
 *.avro
 *.ndjson
+*.json
 
 # Jupyter
 .ipynb_checkpoints/

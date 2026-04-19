@@ -5,13 +5,13 @@ import json
 load_dotenv()
 
 # insert raw FHIR demo patients into demo Snowflake db
-def insert_fhir_patients(json_path: str):
+def insert_raw_fhir_patients(json_path: str):
     conn, cur = connect_to_snowflake()
 
     try:
         # optional: create table first
         cur.execute("""
-            CREATE TABLE IF NOT EXISTS fhir_patients (
+            CREATE TABLE IF NOT EXISTS raw_fhir_patients (
                 resource_type       STRING,
                 patient_id          STRING,
                 family_name         STRING,
@@ -56,7 +56,7 @@ def insert_fhir_patients(json_path: str):
             ))
 
         insert_sql = """
-            INSERT INTO fhir_patients (
+            INSERT INTO raw_fhir_patients (
                 resource_type,
                 patient_id,
                 family_name,
@@ -94,7 +94,7 @@ def insert_fhir_patients(json_path: str):
         cur.executemany(insert_sql, rows)
         conn.commit()
 
-        print(f"Loaded {len(rows)} records into fhir_patients")
+        print(f"Loaded {len(rows)} records into raw_fhir_patients")
 
     except Exception as e:
         conn.rollback()
@@ -106,4 +106,4 @@ def insert_fhir_patients(json_path: str):
         conn.close()
 
 if __name__ == "__main__":
-    insert_fhir_patients("src/data/sample_fhir.json")
+    insert_raw_fhir_patients("src/data/sample_fhir.json")
