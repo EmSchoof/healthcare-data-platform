@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from src.libs.utils.snowflake_conn import connect_to_snowflake
+from src.libs.utils.snowflake_setup import ensure_fhir_patients_table
 import json
 
 load_dotenv()
@@ -9,27 +10,10 @@ def insert_raw_fhir_patients(json_path: str):
     conn, cur = connect_to_snowflake()
 
     try:
-        # optional: create table first
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS raw_fhir_patients (
-                resource_type       STRING,
-                patient_id          STRING,
-                family_name         STRING,
-                given_name          STRING,
-                gender              STRING,
-                birth_date          DATE,
-                city                STRING,
-                state               STRING,
-                postal_code         STRING,
-                country             STRING,
-                identifier_system   STRING,
-                identifier_value    STRING,
-                raw_payload         VARIANT,
-                ingested_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP,
-                source_file STRING
-            )
-        """)
+        # ensure table exists
+        ensure_fhir_patients_table(conn, cur)
 
+        # prepare data for import
         with open(json_path, "r", encoding="utf-8") as f:
             patients = json.load(f)
 
@@ -42,8 +26,8 @@ def insert_raw_fhir_patients(json_path: str):
             rows.append((
                 patient.get("resourceType"),
                 patient.get("id"),
-                name0.get("family"),
                 (name0.get("given") or [None])[0],
+                name0.get("family"),
                 patient.get("gender"),
                 patient.get("birthDate"),
                 address0.get("city"),
@@ -59,8 +43,8 @@ def insert_raw_fhir_patients(json_path: str):
             INSERT INTO raw_fhir_patients (
                 resource_type,
                 patient_id,
-                family_name,
-                given_name,
+                first_name,
+                last_name,
                 gender,
                 birth_date,
                 city,
