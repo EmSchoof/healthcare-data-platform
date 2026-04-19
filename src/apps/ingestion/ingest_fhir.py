@@ -4,7 +4,7 @@ import json
 
 load_dotenv()
 
-# insert FHIR demo patients into demo Snowflake db
+# insert raw FHIR demo patients into demo Snowflake db
 def insert_fhir_patients(json_path: str):
     conn, cur = connect_to_snowflake()
 
@@ -24,7 +24,9 @@ def insert_fhir_patients(json_path: str):
                 country             STRING,
                 identifier_system   STRING,
                 identifier_value    STRING,
-                raw_payload         VARIANT
+                raw_payload         VARIANT,
+                ingested_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP,
+                source_file STRING
             )
         """)
 
