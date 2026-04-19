@@ -1,41 +1,79 @@
-# Healthcare Data Platform (FHIR → Snowflake)
+ # Healthcare Data Platform Demo
 
-## Overview
-This project simulates a healthcare data platform that ingests FHIR Patient data,
-transforms it into analytics-ready tables, and exposes care management metrics.
+A small healthcare data engineering demo project that ingests synthetic FHIR Patient resources into Snowflake, transforms semi-structured records into analytics-ready models with dbt, and orchestrates the workflow with Airflow.
 
-## Architecture
-- Ingestion: Python → Snowflake VARIANT
-- Transformation: dbt (Medallion Architecture)
-- Orchestration: Airflow
-- Warehouse: Snowflake
+## Project Goal
 
-## Data Flow
-1. Load FHIR JSON into raw table
-2. Normalize into structured staging layer
-3. Aggregate into analytics marts
+This project demonstrates a production-shaped healthcare analytics pipeline:
 
-## Key Features
-- Semi-structured ingestion (FHIR JSON)
-- Incremental + deduplication logic
-- Analytics-ready patient metrics
+- ingest synthetic FHIR Patient JSON data into Snowflake
+- preserve the original resource payload in a raw semi-structured column
+- transform raw records into clean warehouse models with dbt
+- validate key data quality rules with dbt tests
+- orchestrate ingestion and transformation with Airflow
 
-## Example Queries
-- Patient count by state
-- Average age distribution
+_Credentials, local dbt profiles, Snowflake private keys, dbt artifacts, logs, and non-curated data extracts are intentionally excluded from version control._
 
-## Future Enhancements
-- Observations + Encounters
-- Real-time ingestion (Snowpipe)
-- Data quality checks (dbt tests)
+## Tech Stack
 
-### Pipeline Flow
-- Ingest FHIR JSON into Snowflake stage
-- Load into raw_fhir_patient (VARIANT)
-- dbt transforms → patient_silver
-- dbt builds marts → patient_metrics
-- Airflow orchestrates daily runs
-- BI / SQL queries consume metrics
+- Python
+- Snowflake
+- dbt
+- Airflow
+
+## Current Functionality
+
+### 1. Ingestion
+Python loads synthetic FHIR Patient resources into Snowflake.
+
+The raw table stores:
+- structured patient fields for analytics
+- the original FHIR payload in a Snowflake `VARIANT` column
+
+### 2. Transformation
+dbt transforms raw patient records into:
+- `stg_fhir_patients`
+- `dim_patients`
+- `patient_summary`
+
+### 3. Data Quality
+dbt tests validate:
+- `patient_id` is not null
+- `patient_id` is unique in `dim_patients`
+- `resource_type` must equal `Patient`
+
+### 4. Orchestration
+Airflow runs the pipeline in this order:
+1. ingest FHIR JSON
+2. run dbt models
+3. run dbt tests
+
+## Repository Structure
+
+```text
+src/
+  apps/
+    ingestion/
+      ingest_fhir.py
+  data/
+    sample_fhir.json
+
+dbt_project/
+  dbt_project.yml
+  models/
+    sources.yml
+    staging/
+      stg_fhir_patients.sql
+      staging.yml
+    marts/
+      dim_patients.sql
+      patient_summary.sql
+      marts.yml
+
+airflow/
+  dags/
+    healthcare_data_platform_demo.py
+ ```
 
 ### Demo Questions
 - “How many patients per state?”
