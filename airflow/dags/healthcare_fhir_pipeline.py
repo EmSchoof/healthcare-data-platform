@@ -9,6 +9,7 @@ from airflow.operators.bash import BashOperator
 
 # Adjust this if your Airflow worker sees the repo at a different path.
 REPO_ROOT = Path.cwd()
+print(REPO_ROOT)
 DBT_DIR_PATH = REPO_ROOT / "src" / "libs" / "dbt"
 
 default_args = {

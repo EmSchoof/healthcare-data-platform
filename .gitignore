@@ -44,7 +44,7 @@ airflow-scheduler.pid
 airflow.cfg
 standalone_admin_password.txt
 logs/
-dags/__pycache__/
+airflow/dags/__pycache__/
 
 # Data files / outputs
 data/raw/

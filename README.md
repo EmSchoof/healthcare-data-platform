@@ -20,6 +20,7 @@ _Credentials, local dbt profiles, Snowflake private keys, dbt artifacts, logs, a
 - Snowflake
 - dbt
 - Airflow
+- Nx (for monorepo management)
 
 ## Current Functionality
 
@@ -57,8 +58,13 @@ src/
       ingest_fhir.py
   data/
     sample_fhir.json
-
-dbt_project/
+  libs/
+    utils/
+        snowflake_conn.py
+        snowflake_setup.py
+  tests/
+    test_snowflake_connection.py
+dbt/
   dbt_project.yml
   models/
     sources.yml
