@@ -1,0 +1,15 @@
+{
+  "name": "healthcare-data-platform",
+  "private": true,
+  "scripts": {
+    "nx": "nx",
+    "graph": "nx graph",
+    "ingest": "nx run healthcare-data-platform:ingest",
+    "dbt-run": "nx run healthcare-data-platform:dbt-run",
+    "dbt-test": "nx run healthcare-data-platform:dbt-test",
+    "pipeline": "nx run healthcare-data-platform:pipeline"
+  },
+  "devDependencies": {
+    "nx": "^22.0.0"
+  }
+}
