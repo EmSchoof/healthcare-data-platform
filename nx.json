@@ -1,0 +1,28 @@
+{
+  "installation": {
+    "version": "22.6.5"
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "sharedGlobals": []
+  },
+  "targetDefaults": {
+    "ingest": {
+      "cache": false
+    },
+    "dbt-run": {
+      "cache": false
+    },
+    "dbt-test": {
+      "cache": false
+    },
+    "pipeline": {
+      "cache": false,
+      "dependsOn": ["ingest", "dbt-run", "dbt-test"]
+    }
+  }
+}

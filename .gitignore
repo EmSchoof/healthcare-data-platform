@@ -57,7 +57,7 @@ data/private/
 *.feather
 *.avro
 *.ndjson
-*.json
+src/data/*.json
 
 # Jupyter
 .ipynb_checkpoints/
@@ -77,3 +77,9 @@ dbt_packages/
 target/
 logs/
 package-lock.yml
+
+# nx
+.nx/*
+nx
+nx.bat
+node_modules
