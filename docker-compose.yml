@@ -23,13 +23,7 @@ services:
     working_dir: /opt/airflow/repo
     command: >
       bash -c "
-        airflow db migrate &&
-        airflow users list | grep -q ${AIRFLOW_ADMIN_USERNAME} || airflow users create \
-          --username ${AIRFLOW_ADMIN_USERNAME} \
-          --firstname ${AIRFLOW_ADMIN_FIRSTNAME} \
-          --lastname ${AIRFLOW_ADMIN_LASTNAME} \
-          --role Admin \
-          --email ${AIRFLOW_ADMIN_EMAIL} \
-          --password ${AIRFLOW_ADMIN_PASSWORD} &&
-        airflow standalone
-        "
+      airflow db migrate &&
+      airflow users create -u ${AIRFLOW_ADMIN_USERNAME} -f ${AIRFLOW_ADMIN_FIRSTNAME} -l ${AIRFLOW_ADMIN_LASTNAME} -r Admin -e ${AIRFLOW_ADMIN_EMAIL} -p ${AIRFLOW_ADMIN_PASSWORD} &&
+      airflow standalone
+      "
