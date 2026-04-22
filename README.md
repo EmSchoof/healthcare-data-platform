@@ -56,14 +56,10 @@ src/
   apps/
     ingestion/
       ingest_fhir.py
-  data/
-    sample_fhir.json
   libs/
     utils/
         snowflake_conn.py
         snowflake_setup.py
-  tests/
-    test_snowflake_connection.py
 dbt/
   dbt_project.yml
   models/
@@ -75,10 +71,11 @@ dbt/
       dim_patients.sql
       patient_summary.sql
       marts.yml
-
 airflow/
   dags/
     healthcare_data_platform_demo.py
+  dbt_profiles/
+    profiles.yml
  ```
 
 ### Demo Questions
