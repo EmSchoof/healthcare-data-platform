@@ -17,9 +17,12 @@ services:
       PYTHONPATH: "/opt/airflow/repo"
       DBT_PROFILES_DIR: "/opt/airflow/dbt_profiles"
     volumes:
-      - ./dags:/opt/airflow/dags
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/dbt_profiles:/opt/airflow/dbt_profiles
+      - ./airflow/config:/opt/airflow/config
+      - ./dbt:/opt/airflow/dbt
+      - ./src:/opt/airflow/src
       - ./:/opt/airflow/repo
-      - ./docker/dbt_profiles:/opt/airflow/dbt_profiles
     working_dir: /opt/airflow/repo
     command: >
       bash -c "

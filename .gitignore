@@ -73,13 +73,17 @@ src/data/*.json
 htmlcov/
 
 # dbt
-dbt_packages/
-target/
-logs/
-package-lock.yml
+dbt/dbt_packages/
+dbt/target/
+dbt/logs/                                                                          ⎪                                       ⎪
 
 # nx
 .nx/*
 nx
 nx.bat
 node_modules
+
+# Airflow
+airflow/logs/                                                                               ⎪                                       ⎪
+airflow/plugins/
+package-lock.yml
