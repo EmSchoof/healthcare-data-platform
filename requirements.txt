@@ -3,3 +3,4 @@ python-dotenv==1.2.2
 snowflake_connector_python==3.6.0
 dbt-core==1.5.11
 dbt-snowflake==1.5.7
+connexion[swagger-ui]
